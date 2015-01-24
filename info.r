@@ -1,0 +1,5 @@
+name = "Rouhan Guo"
+SID = "24336884"
+email = "rouhan1995@berkeley.edu"
+github_name = "rouhanlulu"
+status = "enrolled"
