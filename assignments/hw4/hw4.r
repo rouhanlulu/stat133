@@ -158,7 +158,8 @@ jackknifeVarEst <- function(x){
     
   {samplei <- x[-i]
    mu_i <- mean(samplei)
-   meani <- c(meani,mu_i)}
+   meani <- c(meani,mu_i)
+   i=i+1}
   
   return(var(meani))
   
