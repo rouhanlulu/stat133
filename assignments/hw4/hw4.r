@@ -14,10 +14,13 @@
 #   element of <data.list>
 
 listLengths <- function(data.list) {
-
-    # your code here
-
+  
+  # your code here
+  data.list <- sapply(data.list, length)
+  return(data.list)
 }
+
+
 
 #### Function 2
 #### Implement the function "powers"
@@ -31,8 +34,12 @@ listLengths <- function(data.list) {
 #              the column names should be : "x", "x^2", "x^3" etc.
 
 powers <- function(x, k){
-
+  i<-1 
+  x.powers<-x
+  while (i < k){m<-t(lapply(x,function(x){return(x^(i+1))}));colnames(m)<-c(x^(i+1));x.powers<-cbind(x.powers,x^(i+1)); i=i+1;}
+  return (x.powers)
 }
+
 
  
 #### Function #3
@@ -63,8 +70,23 @@ powers <- function(x, k){
 # function should stop and print out an error message
 
 # Put your code here
-recipeConversion <- function(recipe){
-
+recipeConversion <- function(data.frame){
+  
+  a<-c("amount","unit","ingredient")
+  if(sum(a %in% names(recipe))!=3)
+    stop("Data frames must be amount, unit, and ingredient")
+  n<-nrow(data.frame)
+  
+  for (i in 1:n)
+  { if (recipe$unit[i]%in%c("cups","cup")==1)
+       recipe$unit[i] <- "ml"
+       recipe$amount[i] <- round(recipe$amount[i]*236.6/5)*5
+    if (recipe$unit[i]%in%c("oz")==1)
+       recipe$unit[i] <- "gr"
+       recipe$amount[i] <- round(recipe$amount[i]*28.3/5)*5}
+  
+  return(recipe)
+  
 }
 
 
@@ -90,7 +112,20 @@ recipeConversion <- function(recipe){
 # -- The bootstrap variance is the sample variance of mu_1, mu_2, ..., mu_B
 
 bootstrapVarEst <- function(x, B){
-
+  
+  n<-length(x)
+  i=1
+  sample1<-sample(x,size=n,replace=TRUE)
+  meani<- mean(sample1)
+  while (i<B)
+    
+  {samplei <- sample(x,size=n,replace=TRUE)
+   mu_i <- mean(samplei)
+   meani <- c(meani,mu_i)
+   i=i+1}
+  
+  return(var(meani))
+  
 }
 
 #### Function #4b
@@ -111,8 +146,22 @@ bootstrapVarEst <- function(x, B){
 #     for this reduced sample calculate the sample mean (get mu_1, mu_2, ..., mu_n)
 # -- The jackknife variance is the sample variance of mu_1, mu_2, ..., mu_n
 
-jackknifeVarEst <- fuction(x){
 
+jackknifeVarEst <- function(x){
+  
+  n <- length(x)
+  i=2
+  sample1<-x[-1]
+  meani <- mean(sample1)
+  
+  while (i<n+1)
+    
+  {samplei <- x[-i]
+   mu_i <- mean(samplei)
+   meani <- c(meani,mu_i)}
+  
+  return(var(meani))
+  
 }
 
 #### Function #4c
@@ -127,8 +176,14 @@ jackknifeVarEst <- fuction(x){
 
 # Note: this function calls the previous two functions.
 
-samplingVarEst <- function(  ){
-
+samplingVarEst <-samplingVarEst <- function(x,type="bootstrap"){
+  
+  if(type == "bootstrap")
+  {return(bootstrapVarEst(x,5000))}
+  
+  if(type == "jackknife")
+  {return(jackknifeVarEst(x))}
+  
+  else
+  {stop("Error: Type must be jackknife or bootstrap")}
 }
-
-
