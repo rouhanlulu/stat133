@@ -71,17 +71,17 @@ set.seed(42)
 # Put all 5 lines in one figure (e.g. use first plot() then lines() for the subsequent lines)
 initial.doctors <- sample(c(1,0), 100, replace=T, prob= c(0.1, 0.9))
 p1 <- sim.doctors(initial.doctors, n.doctors = 100, n.days=2500, p=0.11)
-plot(1:ncol(trial1), colSums(trial1),col="red",type="l", xlab="Days", ylab="Number of Doctor's Adoption on the Drug",
+plot(1:ncol(p1), colSums(p1),col="red",type="l", xlab="Days", ylab="Number of Doctor's Adoption on the Drug",
      main="Stimulation of Drug Adoption",xlim=c(0,2500), ylim=c(0,100), las=1)
 
 p2 <- sim.doctors(initial.doctors, n.doctors = 100, n.days=2500, p=0.24)
-lines(1:ncol(trial2), colSums(trial2),col="green")
+lines(1:ncol(p2), colSums(p2),col="green")
 
 p3 <- sim.doctors(initial.doctors, n.doctors = 100, n.days=2500, p=0.36)
-lines(1:ncol(trial3), colSums(trial3), col="yellow")
+lines(1:ncol(p3), colSums(p3), col="yellow")
 
 p4 <- sim.doctors(initial.doctors, n.doctors = 100, n.days=2500, p=0.47)
-lines(1:ncol(trial4), colSums(trial4), col="pink")
+lines(1:ncol(p4), colSums(p4), col="pink")
 
 p5 <- sim.doctors(initial.doctors, n.doctors = 100, n.days=2500, p=0.53)
-lines(1:ncol(trial5), colSums(trial5), col="blue")
+lines(1:ncol(p5), colSums(p5), col="blue")
