@@ -19,7 +19,11 @@ genBootY = function(x, y, rep = TRUE){
   ### You can assume that the xs are sorted
   ### Hint use tapply here!
   
-
+  
+  
+  w=unlist(tapply(y,x,sample,simplify=F,replace=rep))
+  names(w)=c()
+  return (w)
 }
 
 genBootR = function(fit, err, rep = TRUE){
@@ -27,8 +31,9 @@ genBootR = function(fit, err, rep = TRUE){
   ### Add the errors to the fit to create a y vector
   ### Return a vector of y values the same length as fit
   ### HINT: It can be easier to sample the indices than the values
-  
- 
+  errs=sample(err,replace=F)
+  vec=errs+fit
+  return(vec)
 }
 
 fitModel = function(x, y, degree = 1){
@@ -37,8 +42,11 @@ fitModel = function(x, y, degree = 1){
   ### y and x are numeric vectors of the same length
   ### Return the coefficients as a vector 
   ### HINT: Take a look at the repBoot function to see how to use lm()
-  
- 
+  if (degree==1){
+    coeff=lm(y~x)[1][[1]]}
+  if (degree==2){
+    coeff=lm(y~x+I(x^2))[1][[1]]
+  }
   return(coeff)
 }
 
@@ -46,10 +54,17 @@ oneBoot = function(data, fit = NULL, degree = 1){
   ###  data are either your data (from call to getData)
   ###  OR fit and errors from fit of line to data
   ###  OR fit and errors from fit of quadratic to data  
-
+ if (is.null(fit)){
+   yy=genBootY(data$x,data$y,rep=1)
+   coeff=fitModel(data$x,yy,degree=degree)
+ }
+ else{
+   yy=genBootR(fit[,1],fit[,2],rep=1)
+   coeff=fitModel(data$x,yy,degree=degree)
+ }
  
   ### Use fitModel to fit a model to this bootstrap Y 
- 
+  return(coeff)
 }
 
 repBoot = function(data, B = 1000){
@@ -75,7 +90,14 @@ repBoot = function(data, B = 1000){
   ### and two or three rows, depending on whether the 
   ### fit is for a line or a quadratic
   ### Return this list
-  
+  fittedvalues=lm(data$y~data$x)$fitted.values
+  residue=data$y-fittedvalues
+  fit=cbind(fittevalues,residue)
+  coeff=list()
+  coeff[[1]]=replicate(B,oneBoot(data,fit=NULL,degree=1))
+  coeff[[2]]=replicate(B,oneBoot(data,fit=NULL,degree=2))
+  coeff[[3]]=replicate(B,oneBoot(data,fit=fit,degree=1))
+  coeff[[4]]=replicate(B,oneBoot(data,fit=fit,degree=2))
   return(coeff)
 } 
 
@@ -96,7 +118,17 @@ bootPlot = function(x, y, coeff, trueCoeff){
   
   ### Use trueCoeff to add true line/curve - 
   ###  Make the true line/curve stand out
-
+  if(nrow(coeff)==3){
+    plot(x,y,col="blue")
+    mapply(function(a,b,c) {curve(a*(x^2)+b*x+c,add=TRUE,col=rgb(0,0,255,10,maxColorValue=256))},coeff[3,],coeff[2,],coeff[1,])
+    curve(trueCoeff[3]*(x^2)+trueCoeff[2]*x+trueCoeff[1],add=TRUE,col="blue",lwd=2)
+    
+  }
+  else{
+    plot(x,y,col="blue")
+    mapply(function(intercept,slope){abline(a=intercept,b=slope,col=rgb(0,0,255,10,maxColorValue=256))},coeff[1,],coeff[2,])
+    curve(trueCoeff[3]*(x^2)+trueCoeff[2]*x+trueCoeff[1],add=TRUE,col="blue",lwd=2)
+  }
 }
 
 ### Run your simulation by calling this function
