@@ -1,0 +1,4 @@
+line 95: syntax error, no output  -2
+line 100: use quadratic fit for degree=2  -2
+
+Score: 16/20
