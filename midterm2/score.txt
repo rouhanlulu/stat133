@@ -1,0 +1,11 @@
+y -1
+l: should be length 12  -1
+t: wrong table  -2
+f3  -1
+f4 -1
+line 101: wrong plot  -3
+line 106  -3
+first.cache  -3
+mean.long.cache  -4
+
+Score: 14/33
