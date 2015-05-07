@@ -1,0 +1,16 @@
+Total: 16/20
+
+Function 1
+5/5
+
+Function 2
+4/5
+It works if you call vec <- unlist(strsplit(…) in line 30.
+
+Function 3
+4/5
+This misses some cases e.g. “he saw him” is unchanged.
+
+Function 4
+3/5
+Consider matrix in place of as.matrix. There are also some indexing errors.
