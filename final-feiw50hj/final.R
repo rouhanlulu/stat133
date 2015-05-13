@@ -127,7 +127,7 @@ cw3 <- mean(ChickWeight$weight[ChickWeight$Time==0])
 
 # [1 pt]
 # Create [cw4] a random subset of 200 ChickWeight observations (any 200)
-cw4 <- subset(ChickWeight,200,replace=FALSE)
+#cw4 <- subset(ChickWeight,200,replace=FALSE)
   
 
 # for the next two tasks you will use the data frame infants (size 1236x15)
@@ -234,7 +234,7 @@ max.rain <- sapply(rain,max)
 # max.diff.rain <- <your code here>
 min.rain<-sapply(rain,min)
 for (i in 1:5)
-max.diff.rain[[i]]<-diff(max(abs(max(rain[[i]])-min(rain[[i+1]])),abs(max(rain[[i+1]])-min(rain[[i]]))))
+#max.diff.rain[[i]]<-diff(max(abs(max(rain[[i]])-min(rain[[i+1]])),abs(max(rain[[i+1]])-min(rain[[i]]))))
 
 # [5 pts]
 # Create [prop.rain], a vector of length 5 where each entry is the 
@@ -368,10 +368,10 @@ NumJackpot <- function(k, B){
 # For B = 5000 and each value of k = 10000, 50000, 100000, 500000
 # Plot a histogram of the output from NumJackpot (i.e. four histograms)
 
-hist(NumJackpot(10000,5000))
-hist(NumJackpot(50000,5000))
-hist(NumJackpot(100000,5000))
-hist(NumJackpot(500000,5000))
+#hist(NumJackpot(10000,5000))
+#hist(NumJackpot(50000,5000))
+#hist(NumJackpot(100000,5000))
+#hist(NumJackpot(500000,5000))
 #################################################################
 ##### PART VI : string manipulation and regular expressions [20 pts]
 
@@ -419,7 +419,7 @@ match1<-c(match10,match11)
 
 # [2 pts]
 # Create a vector [dna2] where you have removed all entries whose length is not a multiple of 3
- dna2 <- <your code here>
+# dna2 <- <your code here>
 
 #################################################################
 
